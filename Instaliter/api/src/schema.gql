@@ -8,7 +8,6 @@ type User {
   lastName: String
   email: String!
   username: String!
-  friends: [String!]!
 }
 
 type Query {

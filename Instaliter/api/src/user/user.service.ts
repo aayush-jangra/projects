@@ -9,7 +9,6 @@ export class UserService {
             firstName: 'lol',
             username: 'asda',
             email: "asd",
-            friends: []
         }]
     }
 }
