@@ -14,15 +14,37 @@ type UpdateUserOutput {
   message: String
 }
 
+type Post {
+  id: Int!
+  author: String!
+  createdAt: DateTime!
+  title: String!
+  content: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type UpdatePostOutput {
+  message: String
+}
+
 type Query {
   users: [User!]!
   userFromUsername(username: String!): User
+  posts: [Post!]!
+  postFromId(id: Int!): Post
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   updateUser(username: String!, updatedInformation: UpdateUserInput!): UpdateUserOutput!
   deleteUser(username: String!): UpdateUserOutput!
+  createPost(createPostInput: CreatePostInput!): Post!
+  updatePost(updatePostInput: UpdatePostInput!): UpdatePostOutput!
+  deletePost(id: Int!): UpdatePostOutput!
 }
 
 input CreateUserInput {
@@ -36,4 +58,16 @@ input UpdateUserInput {
   firstName: String
   lastName: String
   email: String
+}
+
+input CreatePostInput {
+  author: String!
+  title: String!
+  content: String!
+}
+
+input UpdatePostInput {
+  id: Float!
+  title: String
+  content: String
 }
