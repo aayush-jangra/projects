@@ -18,21 +18,24 @@ export class PostService {
       where: {
         id,
       },
+      relations: ['author'],
     });
 
     return post;
   }
 
   getAllPosts(): Promise<Post[]> {
-    const posts = this.postRepository.find();
+    const posts = this.postRepository.find({
+      relations: ['author'],
+    });
 
     return posts;
   }
 
   async createPost(createPostInput: CreatePostInput): Promise<Post> {
-    const author = await this.userService.getUserByUsername(createPostInput.author);
-
-    console.log("=======", author)
+    const author = await this.userService.getUserByUsername(
+      createPostInput.author,
+    );
 
     if (!author) {
       throw new Error(
@@ -40,7 +43,7 @@ export class PostService {
       );
     }
 
-    const newPost = this.postRepository.create(createPostInput);
+    const newPost = this.postRepository.create({ ...createPostInput, author });
 
     return this.postRepository.save(newPost);
   }

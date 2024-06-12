@@ -2,21 +2,9 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type User {
-  id: Int!
-  firstName: String!
-  lastName: String
-  email: String!
-  username: String!
-}
-
-type UpdateUserOutput {
-  message: String
-}
-
 type Post {
   id: Int!
-  author: String!
+  author: User!
   createdAt: DateTime!
   title: String!
   content: String!
@@ -26,6 +14,19 @@ type Post {
 A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
 """
 scalar DateTime
+
+type User {
+  id: Int!
+  firstName: String!
+  lastName: String
+  email: String!
+  username: String!
+  posts: [Post!]
+}
+
+type UpdateUserOutput {
+  message: String
+}
 
 type UpdatePostOutput {
   message: String
