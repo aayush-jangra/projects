@@ -32,11 +32,29 @@ type UpdatePostOutput {
   message: String
 }
 
+type Friendship {
+  id: Float!
+  initiatingUser: String!
+  respondingUser: String!
+  requestStatus: RequestStatus!
+}
+
+enum RequestStatus {
+  REQUESTED
+  ACCEPTED
+}
+
+type UpdateRequestOutput {
+  message: String
+}
+
 type Query {
   users: [User!]!
   userFromUsername(username: String!): User
   posts: [Post!]!
   postFromId(id: Int!): Post
+  allFriendships: [Friendship!]!
+  friends(username: String!): [User!]!
 }
 
 type Mutation {
@@ -46,6 +64,10 @@ type Mutation {
   createPost(createPostInput: CreatePostInput!): Post!
   updatePost(updatePostInput: UpdatePostInput!): UpdatePostOutput!
   deletePost(id: Int!): UpdatePostOutput!
+  createFriendRequest(createRequestInput: CreateRequestInput!): Friendship!
+  declineFriendRequest(id: Int!): UpdateRequestOutput!
+  acceptFriendRequest(id: Int!): UpdateRequestOutput!
+  removeFriend(id: Int!): UpdateRequestOutput!
 }
 
 input CreateUserInput {
@@ -71,4 +93,9 @@ input UpdatePostInput {
   id: Float!
   title: String
   content: String
+}
+
+input CreateRequestInput {
+  initiatingUser: String!
+  respondingUser: String!
 }

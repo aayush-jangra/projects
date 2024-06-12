@@ -5,6 +5,7 @@ import { join } from 'path';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { PostModule } from './post/post.module';
+import { FriendshipModule } from './friendship/friendship.module';
 
 @Module({
   imports: [
@@ -24,6 +25,7 @@ import { PostModule } from './post/post.module';
     }),
     UserModule,
     PostModule,
+    FriendshipModule,
   ],
   controllers: [],
   providers: [],
