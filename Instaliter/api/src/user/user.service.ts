@@ -3,6 +3,7 @@ import { User } from './entity/user.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { CreateUserInput } from './dto/create-user.input';
+import { UpdateUserInput } from './dto/update-user.input';
 
 @Injectable()
 export class UserService {
@@ -36,5 +37,40 @@ export class UserService {
     const newUser = this.userRepository.create(createUserInput);
 
     return this.userRepository.save(newUser);
+  }
+
+  async updateUser(username: string, updatedInformation: UpdateUserInput) {
+    const existingUser = await this.getUserByUsername(username);
+
+    if (!existingUser) {
+      throw new Error(`No user found with username: ${username}`);
+    }
+
+    const { affected } = await this.userRepository.update(
+      { username },
+      updatedInformation,
+    );
+    if(affected === 0) {
+      throw new Error ('There was an error updating the user information')
+    }
+
+    return { message: 'User updated successfully' };
+  }
+
+  async deleteUser(username: string) {
+    const existingUser = await this.getUserByUsername(username);
+
+    if (!existingUser) {
+      throw new Error(`No user found with username: ${username}`);
+    }
+
+    const { affected } = await this.userRepository.delete(
+      { username },
+    );
+    if(affected === 0) {
+      throw new Error ('There was an error deleting the user information')
+    }
+
+    return { message: 'User deleted successfully' };
   }
 }

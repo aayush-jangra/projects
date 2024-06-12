@@ -10,12 +10,19 @@ type User {
   username: String!
 }
 
+type UpdateUserOutput {
+  message: String
+}
+
 type Query {
   users: [User!]!
+  userFromUsername(username: String!): User
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
+  updateUser(username: String!, updatedInformation: UpdateUserInput!): UpdateUserOutput!
+  deleteUser(username: String!): UpdateUserOutput!
 }
 
 input CreateUserInput {
@@ -23,4 +30,10 @@ input CreateUserInput {
   lastName: String
   email: String!
   username: String!
+}
+
+input UpdateUserInput {
+  firstName: String
+  lastName: String
+  email: String
 }
