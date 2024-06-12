@@ -16,13 +16,14 @@ export class UserService {
       where: {
         username,
       },
+      relations: ['posts']
     });
 
     return user;
   }
 
   getAllUsers(): Promise<User[]> {
-    const users = this.userRepository.find();
+    const users = this.userRepository.find({relations: ['posts']});
 
     return users;
   }
