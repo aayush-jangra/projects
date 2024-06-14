@@ -11,8 +11,8 @@ jobs:
   check-changes:
     runs-on: ubuntu-latest
     outputs:
-      api-changed: ${{ steps.check.outputs.api_changed }}
-      ui-changed: ${{ steps.check.outputs.ui_changed }}
+      api_changed: ${{ steps.check.outputs.api_changed }}
+      ui_changed: ${{ steps.check.outputs.ui_changed }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -34,8 +34,6 @@ jobs:
 
           echo "API_CHANGED=$API_CHANGED" >> $GITHUB_ENV
           echo "UI_CHANGED=$UI_CHANGED" >> $GITHUB_ENV
-          echo "::set-output name=api_changed::$API_CHANGED"
-          echo "::set-output name=ui_changed::$UI_CHANGED"
 
   api:
     runs-on: ubuntu-latest
