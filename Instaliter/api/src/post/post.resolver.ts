@@ -7,9 +7,9 @@ import { UpdatePostInput } from './dto/update-post.input';
 
 @Resolver()
 export class PostResolver {
-    constructor (private postService: PostService) {} 
+  constructor(private postService: PostService) {}
 
-    @Query(() => [Post])
+  @Query(() => [Post])
   posts(): Promise<Post[]> {
     return this.postService.getAllPosts();
   }
