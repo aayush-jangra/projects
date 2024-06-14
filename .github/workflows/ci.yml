@@ -32,8 +32,8 @@ jobs:
             fi
           done
 
-          echo "API_CHANGED=$API_CHANGED" >> $GITHUB_ENV
-          echo "UI_CHANGED=$UI_CHANGED" >> $GITHUB_ENV
+          echo "api_changed=$API_CHANGED" >> $GITHUB_ENV
+          echo "ui_changed=$UI_CHANGED" >> $GITHUB_ENV
 
   api:
     runs-on: ubuntu-latest
