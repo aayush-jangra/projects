@@ -7,6 +7,6 @@ import { UserModule } from 'src/user/user.module';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Friendship]), UserModule],
-  providers: [FriendshipService, FriendshipResolver]
+  providers: [FriendshipService, FriendshipResolver],
 })
 export class FriendshipModule {}

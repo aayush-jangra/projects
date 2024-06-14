@@ -16,14 +16,14 @@ export class UserService {
       where: {
         username,
       },
-      relations: ['posts']
+      relations: ['posts'],
     });
 
     return user;
   }
 
   getAllUsers(): Promise<User[]> {
-    const users = this.userRepository.find({relations: ['posts']});
+    const users = this.userRepository.find({ relations: ['posts'] });
 
     return users;
   }
@@ -51,8 +51,8 @@ export class UserService {
       { username },
       updatedInformation,
     );
-    if(affected === 0) {
-      throw new Error ('There was an error updating the user information')
+    if (affected === 0) {
+      throw new Error('There was an error updating the user information');
     }
 
     return { message: 'User updated successfully' };
@@ -65,11 +65,9 @@ export class UserService {
       throw new Error(`No user found with username: ${username}`);
     }
 
-    const { affected } = await this.userRepository.delete(
-      { username },
-    );
-    if(affected === 0) {
-      throw new Error ('There was an error deleting the user information')
+    const { affected } = await this.userRepository.delete({ username });
+    if (affected === 0) {
+      throw new Error('There was an error deleting the user information');
     }
 
     return { message: 'User deleted successfully' };

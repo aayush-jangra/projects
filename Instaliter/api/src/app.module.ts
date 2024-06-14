@@ -17,7 +17,7 @@ import { FriendshipModule } from './friendship/friendship.module';
       password: '47896',
       database: 'ildb',
       entities: ['dist/**/*.entity{.ts,.js}'],
-      synchronize: true
+      synchronize: true,
     }),
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
