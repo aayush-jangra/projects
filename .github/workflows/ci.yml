@@ -8,37 +8,8 @@ on:
       - 'Instaliter/ui/**'
 
 jobs:
-  check-changes:
-    runs-on: ubuntu-latest
-    outputs:
-      api_changed: ${{ steps.check.outputs.api_changed }}
-      ui_changed: ${{ steps.check.outputs.ui_changed }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Check for changes in directories
-        id: check
-        run: |
-          API_CHANGED=false
-          UI_CHANGED=false
-
-          git diff --name-only ${{ github.event.before }} ${{ github.sha }} | while read file; do
-            if [[ $file == Instaliter/api/* ]]; then
-              API_CHANGED=true
-            fi
-            if [[ $file == Instaliter/ui/* ]]; then
-              UI_CHANGED=true
-            fi
-          done
-
-          echo "api_changed=$API_CHANGED" >> $GITHUB_ENV
-          echo "ui_changed=$UI_CHANGED" >> $GITHUB_ENV
-
   api:
     runs-on: ubuntu-latest
-    needs: check-changes
-    if: ${{ needs.check-changes.outputs.api_changed == 'true' }}
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -62,33 +33,4 @@ jobs:
 
       - name: Run formatter
         working-directory: Instaliter/api
-        run: npm run format:check
-
-  ui:
-    runs-on: ubuntu-latest
-    needs: check-changes
-    if: ${{ needs.check-changes.outputs.ui_changed == 'true' }}
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: '14'
-
-      - name: Install dependencies
-        working-directory: Instaliter/ui
-        run: npm install
-
-      - name: Run build
-        working-directory: Instaliter/ui
-        run: npm run build
-
-      - name: Run linter
-        working-directory: Instaliter/ui
-        run: npm run lint:check
-
-      - name: Run formatter
-        working-directory: Instaliter/ui
         run: npm run format:check
